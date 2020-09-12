@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "money-course"
+    }
+  },
+  "defaultProject": "money-course",
+  "cli": {
+    "analytics": "f1ae2673-508d-46a6-ab60-ba62689223ff"
+  }
 }
