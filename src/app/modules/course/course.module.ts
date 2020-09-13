@@ -13,6 +13,20 @@ import {CourseProviderFactory} from './course-provider/course-provider-factory';
   providers: [CourseProviderService],
   exports: [CourseComponent]
 })
+/**
+ * @example
+ * ```
+ * @NgModule({
+ *  imports: [
+ *    CourseModule.registerFactories([
+ *      DefaultCourseProviderFactory
+ *    ])
+ *  ],
+ *  bootstrap: [AppComponent]
+ * })
+ * export class AppModule { }
+ * ```
+ */
 export class CourseModule {
   static injector: Injector;
 
