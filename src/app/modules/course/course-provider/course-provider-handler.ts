@@ -1,4 +1,5 @@
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
+import {catchError, switchMap} from 'rxjs/operators';
 
 import {CourseProvider} from './course-provider';
 import {Course} from './course';
@@ -12,22 +13,31 @@ export abstract class CourseProviderHandler {
   }
 
   handle(): Observable<Course[]> {
-    const courses = this.provider.getCourses();
+    return this.provider.getCourses().pipe(
+      switchMap(response => {
+        if (null !== response) {
+          return of(response);
+        }
 
-    if (null !== courses) {
-      return courses;
-    }
-
-    if (this.nextHandler) {
-      return this.nextHandler.handle();
-    } else {
-      return null;
-    }
+        return this.handleNext();
+      }),
+      catchError(() => {
+        return this.handleNext();
+      })
+    );
   }
 
   setNextHandler(handler: CourseProviderHandler): CourseProviderHandler {
     this.nextHandler = handler;
 
     return this.nextHandler;
+  }
+
+  private handleNext(): Observable<Course[]> {
+    if (this.nextHandler) {
+      return this.nextHandler.handle();
+    } else {
+      return of(null);
+    }
   }
 }

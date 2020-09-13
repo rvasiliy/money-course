@@ -23,7 +23,7 @@ export class CourseProviderService {
     const courses$ = this.chainOfProviders.handle();
 
     if (selector) {
-      return courses$.pipe(map(courses => courses.filter(selector)));
+      return courses$.pipe(map(courses => courses?.filter(selector)));
     } else {
       return courses$;
     }
