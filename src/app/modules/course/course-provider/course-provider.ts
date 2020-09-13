@@ -1,5 +1,6 @@
 import {Course} from './course';
+import {Observable} from 'rxjs';
 
 export interface CourseProvider {
-  getCourses(): Course[];
+  getCourses(): Observable<Course[]>;
 }

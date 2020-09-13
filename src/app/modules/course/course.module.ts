@@ -1,5 +1,6 @@
-import {ModuleWithProviders, NgModule} from '@angular/core';
+import {Injector, ModuleWithProviders, NgModule, Type} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {HttpClientModule} from '@angular/common/http';
 
 import {CourseComponent} from './course/course.component';
 import {CourseProviderService} from './services/course-provider.service';
@@ -8,12 +9,18 @@ import {CourseProviderFactory} from './course-provider/course-provider-factory';
 
 @NgModule({
   declarations: [CourseComponent],
-  imports: [CommonModule],
+  imports: [CommonModule, HttpClientModule],
   providers: [CourseProviderService],
   exports: [CourseComponent]
 })
 export class CourseModule {
-  static registerFactories(factories: CourseProviderFactory[]): ModuleWithProviders<CourseModule> {
+  static injector: Injector;
+
+  constructor(private injector: Injector) {
+    CourseModule.injector = injector;
+  }
+
+  static registerFactories(factories: Type<CourseProviderFactory>[]): ModuleWithProviders<CourseModule> {
     const courseProviderFactories = factories || [];
 
     return {

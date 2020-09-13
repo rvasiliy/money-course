@@ -1,3 +1,5 @@
+import {Observable} from 'rxjs';
+
 import {CourseProvider} from './course-provider';
 import {Course} from './course';
 
@@ -9,7 +11,7 @@ export abstract class CourseProviderHandler {
     this.provider = provider;
   }
 
-  handle(): Course[] {
+  handle(): Observable<Course[]> {
     const courses = this.provider.getCourses();
 
     if (null !== courses) {

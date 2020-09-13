@@ -1,0 +1,3 @@
+<div *ngFor="let course of courses$ | async">
+  <div>{{course.name}}: {{course.value | currency:' '}}</div>
+</div>
